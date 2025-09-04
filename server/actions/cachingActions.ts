@@ -15,7 +15,7 @@ const unstableCacheResponse = () => unstable_cache(
         }>);
     },
     [`revalidation-key`],
-    {revalidate: 43200, tags: [`revalidation-key`]}
+    {revalidate: 60, tags: [`revalidation-key`]}
 )()
 
 export async function retrieveResponse() {
