@@ -4,13 +4,15 @@ import {unstable_cache} from "@/lib/unstable_cache";
 
 const unstableCacheResponse = () => unstable_cache(
     async () => {
-        return fetch('https://aisenseapi.com/services/v1/datetime', {
+        const API_URL = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api` : 'http://localhost:3000/api';
+
+        return fetch(`${API_URL}/getTime`, {
             cache  : 'no-store',
             headers: {
                 'Accept': 'application/json',
             }
         }).then(res => res.json() as Promise<{
-            datetime: string
+            now: number
         }>);
     },
     [`revalidation-key`],
@@ -20,5 +22,5 @@ const unstableCacheResponse = () => unstable_cache(
 export async function retrieveResponse() {
     const cached = await unstableCacheResponse();
 
-    return `call - ${cached.datetime}`
+    return `timestamp - ${cached.now}`
 }
