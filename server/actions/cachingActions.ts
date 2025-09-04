@@ -4,14 +4,13 @@ import {unstable_cache} from "@/lib/unstable_cache";
 
 const unstableCacheResponse = () => unstable_cache(
     async () => {
-        return fetch('http://worldtimeapi.org/api/timezone/Europe/Amsterdam', {
+        return fetch('https://aisenseapi.com/services/v1/datetime', {
             cache  : 'no-store',
             headers: {
                 'Accept': 'application/json',
             }
         }).then(res => res.json() as Promise<{
             datetime: string
-            utc_datetime: string
         }>);
     },
     [`revalidation-key`],
