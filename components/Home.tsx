@@ -14,12 +14,17 @@ export default function Home() {
         <main className="flex min-h-screen items-center justify-center p-24">
             <div className="space-y-4">
 
-                <div className="font-bold">{call1}</div>
-
-                {/*Not needed, but ensures these calls are made on the client*/}
-                <div className="hidden">
-                    <div>{call2}</div>
-                    <div>{call3}</div>
+                <div>
+                    <p>Call 1</p>
+                    <div className="font-bold">{call1}</div>
+                </div>
+                <div>
+                    <p>Call 2</p>
+                    <div className="font-bold">{call2}</div>
+                </div>
+                <div>
+                    <p>Call 3</p>
+                   <div className="font-bold">{call3}</div>
                 </div>
             </div>
         </main>

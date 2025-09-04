@@ -3,6 +3,7 @@ import {appRouter}           from "@/server/trpc/routers/_app";
 
 const handler = (req: Request) =>
     fetchRequestHandler({
+        // allowBatching: false,
         endpoint: '/api/trpc',
         req,
         router  : appRouter,

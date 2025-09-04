@@ -1,9 +1,9 @@
 "use client"
 
 import {isServer, QueryClient, QueryClientProvider} from '@tanstack/react-query'
-import {useState}                                   from "react";
-import {createTRPCClient, httpBatchLink}            from "@trpc/client";
-import superjson                                    from 'superjson';
+import {useState}                                  from "react";
+import {createTRPCClient, httpBatchLink, httpLink} from "@trpc/client";
+import superjson                                   from 'superjson';
 import {makeQueryClient}                            from "@/lib/query_client";
 import {AppRouter}                                  from "@/server/trpc/routers/_app";
 import {TRPCProvider}                               from "@/server/trpc/client";
@@ -42,6 +42,10 @@ export default function Providers({children}: { children: React.ReactNode }) {
     const [trpcClient] = useState(() =>
         createTRPCClient<AppRouter>({
             links: [
+                // httpLink({
+                //     url        : getUrl(),
+                //     transformer: superjson,
+                // }),
                 httpBatchLink({
                     url        : getUrl(),
                     transformer: superjson,

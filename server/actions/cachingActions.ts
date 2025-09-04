@@ -1,11 +1,10 @@
 "use server"
 
 import {unstable_cache} from "@/lib/unstable_cache";
+import {API_URL}        from "@/lib/api";
 
-const unstableCacheResponse = () => unstable_cache(
+const unstableCacheCall1Response = () => unstable_cache(
     async () => {
-        const API_URL = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api` : 'http://localhost:3000/api';
-
         return fetch(`${API_URL}/getTime`, {
             cache  : 'no-store',
             headers: {
@@ -15,12 +14,33 @@ const unstableCacheResponse = () => unstable_cache(
             now: number
         }>);
     },
-    [`revalidation-key`],
-    {revalidate: 60, tags: [`revalidation-key`]}
+    [`revalidation-key-call1`],
+    {revalidate: 60, tags: [`revalidation-key-call1`]}
 )()
 
-export async function retrieveResponse() {
-    const cached = await unstableCacheResponse();
+export async function retrieveCall1Response() {
+    const cached = await unstableCacheCall1Response();
 
-    return `timestamp - ${cached.now}`
+    return `ISO - ${cached.now}`
+}
+
+const unstableCacheCall3Response = () => unstable_cache(
+    async () => {
+        return fetch(`${API_URL}/getTime`, {
+            cache  : 'no-store',
+            headers: {
+                'Accept': 'application/json',
+            }
+        }).then(res => res.json() as Promise<{
+            now: number
+        }>);
+    },
+    [`revalidation-key-call3`],
+    {revalidate: 86400, tags: [`revalidation-key-call3`]}
+)()
+
+export async function retrieveCall3Response() {
+    const cached = await unstableCacheCall3Response();
+
+    return `ISO ${cached.now}`
 }
